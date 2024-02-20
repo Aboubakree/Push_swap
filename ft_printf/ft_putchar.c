@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 16:28:17 by akrid             #+#    #+#             */
-/*   Updated: 2024/02/20 16:30:57 by akrid            ###   ########.fr       */
+/*   Created: 2023/11/29 15:37:56 by akrid             #+#    #+#             */
+/*   Updated: 2024/02/11 11:10:59 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#include "ft_printf.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "libft/libft.h"
-
-#endif
+int	ft_putchar(char c)
+{
+	return (write(2, &c, 1));
+}

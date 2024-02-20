@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
+/*   By: akrid <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 16:28:17 by akrid             #+#    #+#             */
-/*   Updated: 2024/02/20 16:30:57 by akrid            ###   ########.fr       */
+/*   Created: 2023/11/09 22:46:45 by akrid             #+#    #+#             */
+/*   Updated: 2023/11/09 23:42:16 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "libft/libft.h"
+void	ft_bzero(void *s, size_t n)
+{
+	size_t	i;
+	char	*ptr;
 
-#endif
+	ptr = s;
+	i = 0;
+	while (i < n)
+		ptr[i ++] = 0;
+}

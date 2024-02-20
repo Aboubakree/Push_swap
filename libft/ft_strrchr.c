@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
+/*   By: akrid <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/19 16:28:17 by akrid             #+#    #+#             */
-/*   Updated: 2024/02/20 16:30:57 by akrid            ###   ########.fr       */
+/*   Created: 2023/11/01 15:32:45 by akrid             #+#    #+#             */
+/*   Updated: 2023/11/16 23:34:27 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+char	*ft_strrchr(const char *s, int c)
+{
+	char	*temp;
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "libft/libft.h"
-
-#endif
+	temp = 0;
+	while (*s)
+	{
+		if ((unsigned char)*s == (unsigned char)c)
+			temp = (char *)s;
+		s ++;
+	}
+	if ((unsigned char)c == (unsigned char) '\0')
+		return ((char *)s);
+	return (temp);
+}

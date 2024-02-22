@@ -2,9 +2,10 @@ NAME = push_swap
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 
-SRC = main.c
+SRC = main.c push_swap_1.c push_swap_2.c push_swap_3.c\
+	libft/ft_split_v2.c libft/ft_atoi.c
 
 OBJ = $(SRC:.c=.o)
 

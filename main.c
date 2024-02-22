@@ -6,28 +6,18 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 16:27:44 by akrid             #+#    #+#             */
-/*   Updated: 2024/02/20 17:44:51 by akrid            ###   ########.fr       */
+/*   Updated: 2024/02/22 21:09:30 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-typedef struct s_stack{
-    int val;
-    struct s_stack *next;
-}   t_stack;
-
-typedef struct s_p_swap{
-    t_stack a;
-    t_stack b;
-}   t_p_swap;
-
-t_stack    *node(int data)
+t_stack    *node(long data)
 {
     t_stack *new;
 
     new = malloc(sizeof(t_stack));
-    if (new = NULL)
+    if (new == NULL)
         return (NULL);
     new->next = NULL;
     new->val = data;
@@ -39,7 +29,7 @@ void    add_back(t_stack **list, t_stack *node)
     t_stack *temp;
 
     if (list && *list == NULL)
-        *list == node;
+        *list = node;
     else
     {
         temp = *list;
@@ -49,50 +39,63 @@ void    add_back(t_stack **list, t_stack *node)
     }
 }
 
-int    fill_stack(char *str, t_stack *a)
+void	add_front(t_stack **list, t_stack *node)
 {
-    
+	node->next = NULL;
+	node->next = *list;
+	*list = node;
 }
 
-void    fill_stack_v2(char **splited, t_stack *a)
+void    parse_args(int argc, char **argv, t_stack **a)
 {
-    int	j;
-    int	fill;
+	char	**temp;
 
-    j = 0;
-    while(splited != NULL && splited[j])
-    {
-        fill = fill_stack(splited[j], a);
-        free(splited[j ++]);
-    }
-    if (splited != NULL)
-        free(splited);
+    if (argc == 2)
+	{
+		temp = ft_split_v2(argv[1], " \t\n");
+        if(valid_digits(length(temp), temp, 0)) {
+			fill_stack(length(temp) ,temp, a, 0);
+			clean(temp);
+		}
+		else {
+			clean(temp);
+			error();
+		}
+	}
+	else {
+        if(valid_digits(argc, argv, 1))
+			fill_stack(argc, argv, a, 1);
+		else
+			error();
+	}
+	check_stack(*a);
 }
 
-void    parse_args(int argc, char **argv, t_stack *a)
+
+void	stack_sort(t_p_swap *stacks)
 {
-    char    **splited;
-    int     i;
-
-
-    i = 1;
-    while(i < argc)
-    {
-        if (count_words(argv[i]) > 1)
-        {
-            splited = ft_split_v2(argv[i], " \t\n");
-            fill_stack_v2(splited, a);
-        }
-        else
-            fill_stack(argv[i], a);
-        i ++;
-    }
+	stacks->b = NULL;
+	sb(&(stacks->a));
 }
 
 int main(int argc, char **argv)
 {
     t_p_swap    stacks;
+	t_stack *x = NULL;
+	int		sort;
 
     parse_args(argc, argv, &stacks.a);
+	sort = check_sorting(stacks.a);
+	if (sort == 0)
+		stack_sort(&stacks);
+	x = stacks.a;
+	while (x)
+	{
+		printf("%ld\n", x->val);
+		x = x->next;
+	}
+	if (sort)
+		printf("Sorting : OK\n");
+	clean_stack(stacks.a);
     return (0);
 }

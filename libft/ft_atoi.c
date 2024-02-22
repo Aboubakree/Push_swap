@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akrid <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 23:25:53 by akrid             #+#    #+#             */
-/*   Updated: 2023/11/16 23:26:53 by akrid            ###   ########.fr       */
+/*   Updated: 2024/02/22 15:08:54 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_atoi(const char *str)
+long	ft_atoi(const char *str)
 {
-	int	ng;
-	int	res;
+	long	ng;
+	long	res;
 
 	ng = 1;
 	res = 0;

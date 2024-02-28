@@ -6,7 +6,7 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 16:28:17 by akrid             #+#    #+#             */
-/*   Updated: 2024/02/25 21:22:21 by akrid            ###   ########.fr       */
+/*   Updated: 2024/02/27 16:06:11 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,14 @@ int			check_sorting(t_stack *a);
 void        sa(t_stack **a);
 void        sb(t_stack **b);
 void    	ss(t_p_swap *stacks);
-void    	pa(t_p_swap *stacks);
-void    	pb(t_p_swap *stacks);
+void        pa(t_stack **a, t_stack **b, t_p_swap *stack);
+void        pb(t_stack **a, t_stack **b, t_p_swap *stack);
 void    	ra(t_stack **a);
 void    	rb(t_stack **b);
 void    	rr(t_p_swap *stacks);
 void    	rra(t_stack **a);
 void    	rrb(t_stack **b);
-void		stack_sort(t_p_swap *stacks);
+void	    stack_sort(t_stack **a, t_stack **b, t_p_swap *stacks);
 int			main(int argc, char **argv);
 
 #endif

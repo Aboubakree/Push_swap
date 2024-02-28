@@ -16,9 +16,9 @@ $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
 
 clean: 
-	rm -f $(OBJ)
+	rm -rf $(OBJ)
 
-fclean: clean
-	rm -f $(NAME)
+fclean : clean
+	rm -rf $(NAME)
 
-re: fclean all
+re : fclean all

@@ -6,7 +6,7 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 20:11:53 by akrid             #+#    #+#             */
-/*   Updated: 2024/02/24 15:32:08 by akrid            ###   ########.fr       */
+/*   Updated: 2024/02/27 15:57:56 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,28 +46,32 @@ void    ss(t_p_swap *stacks)
     sb(&stacks->b);
 }
 
-void    pa(t_p_swap *stacks)
+void    pa(t_stack **a, t_stack **b, t_p_swap *stack)
 {
     t_stack *temp;
     
-    if (stacks->b != NULL)
+    if (*b != NULL)
     {
-        temp = stacks->b;
-        stacks->b = stacks->b->next;
-        add_front(&stacks->a, temp);
+        temp = *b;
+        (*b) = (*b)->next;
+        add_front(a, temp);
+        stack->size_a++;
+        stack->size_b--;
         write(1, "pa\n", 3);
     }
 }
 
-void    pb(t_p_swap *stacks)
+void    pb(t_stack **a, t_stack **b, t_p_swap *stack)
 {
     t_stack *temp;
     
-    if (stacks->a != NULL)
+    if (*a != NULL)
     {
-        temp = stacks->a;
-        stacks->a = stacks->a->next;
-        add_front(&stacks->b, temp);
+        temp = *a;
+        *a = (*a)->next;
+        add_front(b, temp);
+        stack->size_a--;
+        stack->size_b++;
         write(1, "pb\n", 3);
     }
 }

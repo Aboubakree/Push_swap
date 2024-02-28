@@ -6,7 +6,7 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 16:27:44 by akrid             #+#    #+#             */
-/*   Updated: 2024/02/25 22:30:56 by akrid            ###   ########.fr       */
+/*   Updated: 2024/02/27 16:11:03 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	fill_tab(long t[],t_stack *x)
 	temp = x;
 	while(temp){
 		t[i] = temp->val;
+		// printf("t[%d] = %ld\n", i, t[i]);
 		temp = temp->next;
 		i ++;
 	}
@@ -115,66 +116,68 @@ int	get_max(long t[], int size)
 	return (max);
 }
 
-void	sort_tree(t_p_swap *stacks)
+void	sort_tree(t_stack **a, t_stack **b, t_p_swap *stacks)
 {
 	long	t[stacks->size_a];
 	int		min;
 	int		max;
-	
-	fill_tab(t, stacks->a);
+
+	(void)b;
+	fill_tab(t, *a);
 	min = get_min(t, stacks->size_a);
 	max = get_max(t, stacks->size_a);
+	// printf("min : %d --> %ld\n", min, t[min]);
+	// printf("max : %d --> %ld\n", max, t[max]);
 	if (max == 0){
 		ra(&stacks->a);
 		if (min == 2)
 			sa(&stacks->a);
 	}
-	else if (max == 1){
+	else if(max == 1){
 		rra(&stacks->a);
 		if (min == 0)
 			sa(&stacks->a);
 	}
-	else if (max == 2)
+	else if(max == 2){
 		sa(&stacks->a);
+	}
 }
 
-void	sort_four(t_p_swap *stacks)
+void	sort_four(t_stack **a, t_stack **b, t_p_swap *stacks)
 {
 	long	t[stacks->size_a];
 	int		min;
-	int		max;
 	
-	fill_tab(t, stacks->a);
+	fill_tab(t, *a);
 	min = get_min(t, stacks->size_a);
-	max = get_max(t, stacks->size_a);
-	if (max == 0 || min == 0)
-		pb(stacks);
-	else if (max == 3 || min == 3){
-		rra(&stacks->a);
-		pb(stacks);
-	}
-	else {
+	if (min == 0)
+		pb(a, b, stacks);
+	else if (min == 1){
 		sa(&stacks->a);
-		pb(stacks);
+		pb(a, b, stacks);
 	}
-	sort_tree(stacks);
-	if (min == 0 || (min == 3 && max != 0) || (min == 1 && max != 0) )
-		pa(stacks);
-	else if (max == 0 || max == 3 || max == 1){
-		pa(stacks);
-		ra(&stacks->a);
+	else if (min == 2){
+		rra(&stacks->a);
+		rra(&stacks->a);
+		pb(a, b, stacks);
 	}
+	else if (min == 3){
+		rra(&stacks->a);
+		pb(a, b, stacks);
+	}
+	sort_tree(a, b, stacks);
+	pa(a, b, stacks);
 }
 
-void	stack_sort(t_p_swap *stacks)
+void	stack_sort(t_stack **a, t_stack **b, t_p_swap *stacks)
 {
 	stacks->b = NULL;
 	stacks->size_a = ft_lstsize(stacks->a);
 	stacks->size_b = 0;
 	if (stacks->size_a == 3)
-		sort_tree(stacks);
+		sort_tree(a, b, stacks);
 	else if (stacks->size_a == 4)
-		sort_four(stacks);
+		sort_four(a, b, stacks);
 	// else if (stacks->size_a == 5)
 	// 	sort_five();
 	// else
@@ -190,22 +193,22 @@ int main(int argc, char **argv)
     parse_args(argc, argv, &stacks.a);
 	sort = check_sorting(stacks.a);
 	if (sort == 0)
-		stack_sort(&stacks);
+		stack_sort(&stacks.a, &stacks.b, &stacks);
 	// --------------------------------
 	x = stacks.a;
 	while (x)
 	{
-		printf("%ld ", x->val);
+		printf(" %ld ", x->val);
 		x = x->next;
 	}
 	clean_stack(stacks.a);
 	// ---------------------------------
-	// x = stacks.b;
-	// while (x)
-	// {
-	// 	printf("b : %ld\n", x->val);
-	// 	x = x->next;
-	// }
-	// clean_stack(stacks.b);
+	x = stacks.b;
+	while (x)
+	{
+		printf("b : %ld\n", x->val);
+		x = x->next;
+	}
+	clean_stack(stacks.b);
     return (0);
 }

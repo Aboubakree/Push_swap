@@ -6,7 +6,7 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 16:28:17 by akrid             #+#    #+#             */
-/*   Updated: 2024/02/27 16:06:11 by akrid            ###   ########.fr       */
+/*   Updated: 2024/03/01 23:40:47 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,16 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "libft/libft.h"
+
+typedef struct s_operation{
+    long                element_to_push;
+    long                element_to_follow;
+	int	                index_to_follow;
+	int	                index_to_push;
+    int                 total_moves;
+    void                **moves;
+    struct s_operation  *next;
+} t_operation;
 
 typedef struct s_stack{
     long val;
@@ -38,7 +48,7 @@ int		    ft_lstsize(t_stack *lst);
 void	    error();
 void	    clean(char **str);
 void	    clean_stack(t_stack *x);
-t_stack    *node(long data);
+t_stack     *node(long data);
 void        add_back(t_stack **list, t_stack *node);
 void	    add_front(t_stack **list, t_stack *node);
 int			valid_digits(int argc, char **list_args, int i);
@@ -57,6 +67,9 @@ void    	rb(t_stack **b);
 void    	rr(t_p_swap *stacks);
 void    	rra(t_stack **a);
 void    	rrb(t_stack **b);
+void	    sort_two(t_stack **a, t_stack **b, t_p_swap *stacks);
+void	    sort_three(t_stack **a, t_stack **b, t_p_swap *stacks);
+void	    sort_four(t_stack **a, t_stack **b, t_p_swap *stacks);
 void	    stack_sort(t_stack **a, t_stack **b, t_p_swap *stacks);
 int			main(int argc, char **argv);
 

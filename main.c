@@ -6,7 +6,7 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 16:27:44 by akrid             #+#    #+#             */
-/*   Updated: 2024/03/01 23:44:21 by akrid            ###   ########.fr       */
+/*   Updated: 2024/03/03 21:38:36 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,17 +213,85 @@ void	sort_two(t_stack **a, t_stack **b, t_p_swap *stacks)
 		sa(&stacks->a);
 }
 
-void	get_index_to_follow(t_stack **a, t_stack **b, t_p_swap *stacks, t_operation *operation)
+void	get_index_to_follow(t_p_swap *stacks, t_operation *operation)
 {
 	long	b[stacks->size_b];
+	long	distance[stacks->size_b];
+	int		i;
+	int		dist;
 
-	fill_tab(b, *b);
+	i = 0;
+	fill_tab(b, stacks->b);
+	while(i < stacks->size_b){
+		distance[i] = (operation->element_to_push) - b[i];
+		i ++;
+	}
+	i = 0;
+	while (i < stacks->size_b && distance[i] < 0)
+		i ++;
+	if (i == stacks->size_b)
+		i = 0;
+	dist = i;
+	while (i < stacks->size_b){
+		if (distance[i] > 0 && distance[i] < distance[dist])
+			dist = i;
+		i ++;
+	}
+	operation->element_to_follow = b[dist];
+	operation->index_to_follow = dist;
 }
 
+t_operation	*new_operation()
+{
+	t_operation	*new;
+
+	new = malloc(sizeof(t_operation));
+	if (new == NULL)
+		return (NULL);
+	new->next = NULL;
+	return (new);
+}
+
+void	operation_add_back(t_operation	**list, t_operation *operation)
+{
+	t_operation *temp;
+
+	if (*list == NULL)
+		*list = operation;
+	else {
+		temp = *list;
+		while (temp->next)
+			temp = temp->next;
+		temp->next = operation;
+	}
+}
+
+void	clean_operation(t_operation *operation)
+{
+	t_operation *temp;
+
+	temp = operation;
+	while (temp){
+		operation = operation->next;
+		free(temp);
+		temp = operation;
+	}
+}
+
+void	get_operation_moves(t_p_swap *stacks, t_operation **list_operation)
+{
+	t_operation *temp;
+
+	temp = *list_operation;
+	while(temp){
+		
+	}
+}
 
 void	final_sort(t_stack **a, t_stack **b, t_p_swap *stacks)
 {
 	t_operation	*operation;
+	t_operation	*list_operation;
 	int			i;
 	t_stack		*temp;
 
@@ -231,11 +299,18 @@ void	final_sort(t_stack **a, t_stack **b, t_p_swap *stacks)
 	pb(a, b, stacks);
 	i = 0;
 	temp = *a;
+	list_operation = NULL;
 	while (temp){
 		operation = new_operation();
-		get_index_to_follow(a, b, stacks, operation);
+		operation->index_to_push = i;
+		operation->element_to_push = temp->val;
+		get_index_to_follow(stacks, operation);
+		operation_add_back(&list_operation, operation);
+		i ++;
+		temp = temp->next;
 	}
-
+	get_operation_moves(stacks, &list_operation);
+	clean_operation(list_operation);
 }
 
 void	stack_sort(t_stack **a, t_stack **b, t_p_swap *stacks)
@@ -250,7 +325,7 @@ void	stack_sort(t_stack **a, t_stack **b, t_p_swap *stacks)
 	if (stacks->size_a == 2)
 		sort_two(a, b, stacks);
 	else if (stacks->size_a == 3)
-		sort_tree(a, b, stacks);
+		sort_three(a, b, stacks);
 	else if (stacks->size_a == 4)
 		sort_four(a, b, stacks);
 	else if (stacks->size_a == 5)

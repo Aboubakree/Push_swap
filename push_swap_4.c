@@ -6,7 +6,7 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:18:22 by akrid             #+#    #+#             */
-/*   Updated: 2024/02/24 16:02:23 by akrid            ###   ########.fr       */
+/*   Updated: 2024/03/05 13:12:26 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,31 @@ void    rb(t_stack **b)
         *b = temp;
 }
 
-void    rr(t_p_swap *stacks)
+void    rr_extended(t_stack **a)
 {
-    ra(&stacks->a);
-    rb(&stacks->b);
+    t_stack *temp;
+    t_stack *iter;
+    
+    temp = *a;
+    if (temp){
+        *a = temp->next;
+        temp->next = NULL;
+    }
+    iter = *a;
+    while (iter && iter->next)
+        iter = iter->next;
+    if (iter){
+        iter->next = temp;
+    }
+    else
+        *a = temp;
+}
+
+void    rr(t_stack **a, t_stack **b)
+{
+    rr_extended(a);
+    rr_extended(b);
+    write(1, "rr\n", 3);
 }
 
 void    rra(t_stack **a)
@@ -94,8 +115,28 @@ void    rrb(t_stack **b)
     }
 }
 
-void    rrr(t_p_swap *stacks)
+void    rrr(t_stack **a, t_stack **b)
 {
-    rra(&stacks->a);
-    rrb(&stacks->b);
+    t_stack *temp;
+    t_stack *iter;
+
+    iter = *a;
+    while (iter && iter->next && iter->next->next)
+        iter = iter->next;
+    if (iter && iter->next){
+        temp = iter->next;
+        iter->next = NULL;
+        temp->next = *a;
+        *a = temp;
+    }
+    iter = *b;
+    while (iter && iter->next && iter->next->next)
+        iter = iter->next;
+    if (iter && iter->next){
+        temp = iter->next;
+        iter->next = NULL;
+        temp->next = *b;
+        *b = temp;
+    }
+    write(1, "rrr\n", 4);
 }

@@ -6,7 +6,7 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 20:11:53 by akrid             #+#    #+#             */
-/*   Updated: 2024/02/27 15:57:56 by akrid            ###   ########.fr       */
+/*   Updated: 2024/03/04 02:22:34 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void    sa(t_stack **a)
         *a = first->next;
         first->next = (*a)->next;
         (*a)->next = first;
+        write(1, "sa\n", 3);
     }
-    write(1, "sa\n", 3);
 }
 
 void    sb(t_stack **b)
@@ -36,8 +36,8 @@ void    sb(t_stack **b)
         *b = first->next;
         first->next = (*b)->next;
         (*b)->next = first;
+        write(1, "sb\n", 3);
     }
-    write(1, "sb\n", 3);
 }
 
 void    ss(t_p_swap *stacks)

@@ -6,7 +6,7 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 16:28:17 by akrid             #+#    #+#             */
-/*   Updated: 2024/03/01 23:40:47 by akrid            ###   ########.fr       */
+/*   Updated: 2024/03/05 13:12:37 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ typedef struct s_operation{
 	int	                index_to_follow;
 	int	                index_to_push;
     int                 total_moves;
-    void                **moves;
     struct s_operation  *next;
 } t_operation;
 
@@ -64,9 +63,10 @@ void        pa(t_stack **a, t_stack **b, t_p_swap *stack);
 void        pb(t_stack **a, t_stack **b, t_p_swap *stack);
 void    	ra(t_stack **a);
 void    	rb(t_stack **b);
-void    	rr(t_p_swap *stacks);
+void        rr(t_stack **a, t_stack **b);
 void    	rra(t_stack **a);
 void    	rrb(t_stack **b);
+void        rrr(t_stack **a, t_stack **b);
 void	    sort_two(t_stack **a, t_stack **b, t_p_swap *stacks);
 void	    sort_three(t_stack **a, t_stack **b, t_p_swap *stacks);
 void	    sort_four(t_stack **a, t_stack **b, t_p_swap *stacks);

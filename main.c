@@ -6,7 +6,7 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 16:27:44 by akrid             #+#    #+#             */
-/*   Updated: 2024/03/05 16:36:59 by akrid            ###   ########.fr       */
+/*   Updated: 2024/03/08 08:52:49 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,30 +116,35 @@ int	get_max(long t[], int size)
 	return (max);
 }
 
-void	sort_three(t_stack **a, t_stack **b, t_p_swap *stacks)
+void	sort_three(t_stack **a, t_p_swap *stacks)
 {
 	long	t[stacks->size_a];
 	int		min;
 	int		max;
 
-	(void)b;
 	fill_tab(t, *a);
 	min = get_min(t, stacks->size_a);
 	max = get_max(t, stacks->size_a);
+	// int	i = 0;
+	// while(i < stacks->size_a){
+	// 	printf("a[%d] = %ld | ",i, t[i]);
+	// 	i ++;
+	// }
+	// printf("\nmin : %d --> %ld\n,max : %d --> %ld\n", min, t[min], max, t[max]);
 	// printf("min : %d --> %ld\n", min, t[min]);
 	// printf("max : %d --> %ld\n", max, t[max]);
 	if (max == 0){
-		ra(&stacks->a);
+		ra(a);
 		if (min == 2)
-			sa(&stacks->a);
+			sa(a);
 	}
 	else if(max == 1){
-		rra(&stacks->a);
+		rra(a);
 		if (min == 0)
-			sa(&stacks->a);
+			sa(a);
 	}
-	else if(max == 2){
-		sa(&stacks->a);
+	else if(max == 2 && min == 1){
+		sa(a);
 	}
 }
 
@@ -153,31 +158,31 @@ void	sort_four(t_stack **a, t_stack **b, t_p_swap *stacks)
 	if (min == 0)
 		pb(a, b, stacks);
 	else if (min == 1){
-		sa(&stacks->a);
+		sa(a);
 		pb(a, b, stacks);
 	}
 	else if (min == 2){
-		rra(&stacks->a);
-		rra(&stacks->a);
+		rra(a);
+		rra(a);
 		pb(a, b, stacks);
 	}
 	else if (min == 3){
-		rra(&stacks->a);
+		rra(a);
 		pb(a, b, stacks);
 	}
-	sort_three(a, b, stacks);
+	sort_three(a, stacks);
 	pa(a, b, stacks);
 }
 
 void	sort_five_extand(t_stack **a, t_stack **b, t_p_swap *stacks, int min)
 {
 	if (min == 3){
-		rra(&stacks->a);
-		rra(&stacks->a);
+		rra(a);
+		rra(a);
 		pb(a, b, stacks);
 	}
 	else if (min == 4){
-		rra(&stacks->a);
+		rra(a);
 		pb(a, b, stacks);
 	}	
 }
@@ -192,12 +197,12 @@ void	sort_five(t_stack **a, t_stack **b, t_p_swap *stacks)
 	if (min == 0)
 		pb(a, b, stacks);
 	else if (min == 1){
-		sa(&stacks->a);
+		sa(a);
 		pb(a, b, stacks);
 	}
 	else if (min == 2){
-		ra(&stacks->a);
-		ra(&stacks->a);
+		ra(a);
+		ra(a);
 		pb(a, b, stacks);
 	}
 	else
@@ -206,12 +211,12 @@ void	sort_five(t_stack **a, t_stack **b, t_p_swap *stacks)
 	pa(a, b, stacks);
 }
 
-void	sort_two(t_stack **a, t_stack **b, t_p_swap *stacks)
+void	sort_two(t_stack **a)
 {
-	(void)b;
 	if ((*a)->val > (*a)->next->val)
-		sa(&stacks->a);
+		sa(a);
 }
+
 
 int	get_minimum_distance(long distance[], int size)
 {
@@ -219,13 +224,13 @@ int	get_minimum_distance(long distance[], int size)
 	int	dist;
 
 	i = 0;
-	while (i < size && distance[i] < 0)
+	while (i < size && distance[i] > 0)
 		i ++;
 	if (i == size) {
 		i = 0;
 		dist = 0;
 		while (i < size){
-			if (distance[i] < distance[dist])
+			if (distance[i] > distance[dist])
 				dist = i;
 			i ++;
 		}
@@ -233,14 +238,14 @@ int	get_minimum_distance(long distance[], int size)
 	}
 	dist = i;
 	while (i < size){
-		if (distance[i] > 0 && distance[i] < distance[dist])
+		if (distance[i] < 0 && distance[i] > distance[dist])
 			dist = i;
 		i ++;
 	}
 	return (dist);
 }
 
-void	get_index_to_follow(t_p_swap *stacks, t_operation **operation)
+void	get_index_to_follow_in_b(t_p_swap *stacks, t_operation **operation)
 {
 	long	b[stacks->size_b];
 	long	distance[stacks->size_b];
@@ -255,6 +260,24 @@ void	get_index_to_follow(t_p_swap *stacks, t_operation **operation)
 	}
 	dist = get_minimum_distance(distance, stacks->size_b);
 	(*operation)->element_to_follow = b[dist];
+	(*operation)->index_to_follow = dist;
+}
+
+void	get_index_to_follow_in_a(t_p_swap *stacks, t_operation **operation)
+{
+	long	a[stacks->size_a];
+	long	distance[stacks->size_a];
+	int		i;
+	int		dist;
+
+	i = 0;
+	fill_tab(a, stacks->a);
+	while(i < stacks->size_a){
+		distance[i] = ((*operation)->element_to_push) - a[i];
+		i ++;
+	}
+	dist = get_minimum_distance(distance, stacks->size_a);
+	(*operation)->element_to_follow = a[dist];
 	(*operation)->index_to_follow = dist;
 }
 
@@ -295,7 +318,31 @@ void	clean_operation(t_operation *operation)
 	}
 }
 
-void	get_operation_moves(t_p_swap *stacks, t_operation **list_operation)
+void	get_operation_moves_b_to_a(t_p_swap *stacks, t_operation **list_operation)
+{
+	t_operation *temp;
+	int	a_medium;
+	int	b_medium;
+
+	a_medium = stacks->size_a / 2;
+	b_medium = stacks->size_b / 2;
+	temp = *list_operation;
+	while(temp){
+		temp->total_moves = 0;
+		if (temp->index_to_push <= b_medium)
+			temp->total_moves += temp->index_to_push;
+		else
+			temp->total_moves += stacks->size_b - temp->index_to_push;
+		if (temp->index_to_follow <= a_medium)
+			temp->total_moves += temp->index_to_follow;
+		else
+			temp->total_moves += stacks->size_a - temp->index_to_follow;
+		temp = temp->next;
+	}
+}
+
+
+void	get_operation_moves_a_to_b(t_p_swap *stacks, t_operation **list_operation)
 {
 	t_operation *temp;
 	int	a_medium;
@@ -318,24 +365,24 @@ void	get_operation_moves(t_p_swap *stacks, t_operation **list_operation)
 	}
 }
 
-void	rotate_a(t_stack **a, t_p_swap *stacks, t_operation *element)
+void	rotate_b_b_to_a(t_stack **b, t_p_swap *stacks, t_operation *element)
 {
-	if (element->index_to_push > (stacks->size_a / 2)){
-		element->index_to_push = stacks->size_a - element->index_to_push;
+	if (element->index_to_push > (stacks->size_b / 2)){
+		element->index_to_push = stacks->size_b - element->index_to_push;
 		while(element->index_to_push){
-			rra(a);
+			rrb(b);
 			element->index_to_push --;
 		}
 	}
 	else {
 		while(element->index_to_push){
-			ra(a);
+			rb(b);
 			element->index_to_push --;
 		}
 	}
 }
 
-void	rotate_b(t_stack **b, t_p_swap *stacks, t_operation *element)
+void	rotate_b_a_to_b(t_stack **b, t_p_swap *stacks, t_operation *element)
 {
 	if (element->index_to_follow > (stacks->size_b / 2)){
 		element->index_to_follow = stacks->size_b - element->index_to_follow;
@@ -352,27 +399,135 @@ void	rotate_b(t_stack **b, t_p_swap *stacks, t_operation *element)
 	}
 }
 
-void	rotate_ab(t_stack **a, t_stack **b, t_p_swap *stacks, t_operation *element)
+void	rotate_a_b_to_a(t_stack **a, t_p_swap *stacks, t_operation *element)
 {
-	if (element->index_to_push > (stacks->size_a / 2) && element->index_to_follow > (stacks->size_b / 2)){
+	if (element->index_to_follow > (stacks->size_a / 2)){
+		element->index_to_follow = stacks->size_a - element->index_to_follow;
+		while(element->index_to_follow){
+			rra(a);
+			element->index_to_follow --;
+		}
+	}
+	else {
+		while(element->index_to_follow){
+			ra(a);
+			element->index_to_follow --;
+		}
+	}
+}
+
+void	rotate_a_a_to_b(t_stack **a, t_p_swap *stacks, t_operation *element)
+{
+	if (element->index_to_push > (stacks->size_a / 2)){
 		element->index_to_push = stacks->size_a - element->index_to_push;
-		element->index_to_follow = stacks->size_b - element->index_to_follow;
-		while(element->index_to_push && element->index_to_follow){
-			rrr(a, b);
+		while(element->index_to_push){
+			rra(a);
 			element->index_to_push --;
-			element->index_to_follow --;
 		}
 	}
-	else if (element->index_to_push < (stacks->size_a / 2) && element->index_to_follow < (stacks->size_b / 2)) {
-		while(element->index_to_push && element->index_to_follow){
-			rr(a, b);
+	else {
+		while(element->index_to_push){
+			ra(a);
 			element->index_to_push --;
-			element->index_to_follow --;
 		}
 	}
-	else{
-		rotate_a(a, stacks, element);
-		rotate_b(b, stacks, element);
+}
+// -------------------------------------------
+
+void	rotate_ab_up_a_to_b(t_stack **a, t_stack **b, t_p_swap *stacks, t_operation *element)
+{
+	element->index_to_follow = stacks->size_b - element->index_to_follow;
+	element->index_to_push = stacks->size_a - element->index_to_push;
+	while (element->index_to_push && element->index_to_follow){
+		rrr(a, b);
+		element->index_to_push --;
+		element->index_to_follow --;
+	}
+	while(element->index_to_push){
+		rra(a);
+		element->index_to_push --;
+	}
+	while(element->index_to_follow){
+		rrb(b);
+		element->index_to_follow --;
+	}
+}
+
+void	rotate_ab_down_a_to_b(t_stack **a, t_stack **b, t_operation *element)
+{
+	while(element->index_to_push && element->index_to_follow){
+		rr(a, b);
+		element->index_to_push --;
+		element->index_to_follow --;
+	}
+	while(element->index_to_follow){
+		rb(b);
+		element->index_to_follow --;
+	}
+	while(element->index_to_push){
+		ra(a);
+		element->index_to_push --;
+	}
+}
+
+void	rotate_ab_a_to_b(t_stack **a, t_stack **b, t_p_swap *stacks, t_operation *element)
+{
+	if (element->index_to_push > (stacks->size_a / 2) && element->index_to_follow > (stacks->size_b / 2))
+		rotate_ab_up_a_to_b(a, b, stacks, element);
+	else if (element->index_to_push <= (stacks->size_a / 2) && element->index_to_follow <= (stacks->size_b / 2))
+		rotate_ab_down_a_to_b(a, b, element);
+	else {
+		rotate_a_a_to_b(a, stacks, element);
+		rotate_b_a_to_b(b, stacks, element);
+	}
+}
+//----------------------------------------------
+
+void	rotate_ab_up_b_to_a(t_stack **a, t_stack **b, t_p_swap *stacks, t_operation *element)
+{
+	element->index_to_follow = stacks->size_a - element->index_to_follow;
+	element->index_to_push = stacks->size_b - element->index_to_push;
+	while (element->index_to_push && element->index_to_follow){
+		rrr(a, b);
+		element->index_to_push --;
+		element->index_to_follow --;
+	}
+	while(element->index_to_follow){
+		rra(a);
+		element->index_to_follow --;
+	}
+	while(element->index_to_push){
+		rrb(b);
+		element->index_to_push --;
+	}
+}
+
+void	rotate_ab_down_b_to_a(t_stack **a, t_stack **b, t_operation *element)
+{
+	while(element->index_to_push && element->index_to_follow){
+		rr(a, b);
+		element->index_to_push --;
+		element->index_to_follow --;
+	}
+	while(element->index_to_push){
+		rb(b);
+		element->index_to_push --;
+	}
+	while(element->index_to_follow){
+		ra(a);
+		element->index_to_follow --;
+	}
+}
+
+void	rotate_ab_b_to_a(t_stack **a, t_stack **b, t_p_swap *stacks, t_operation *element)
+{
+	if (element->index_to_push > (stacks->size_b / 2) && element->index_to_follow > (stacks->size_a / 2))
+		rotate_ab_up_b_to_a(a, b, stacks, element);
+	else if (element->index_to_push <= (stacks->size_b / 2) && element->index_to_follow <= (stacks->size_a / 2))
+		rotate_ab_down_b_to_a(a, b, element);
+	else {
+		rotate_a_b_to_a(a, stacks, element);
+		rotate_b_b_to_a(b, stacks, element);
 	}
 }
 
@@ -383,60 +538,84 @@ void	push_b(t_stack **a, t_stack **b, t_p_swap *stacks, t_operation *list_operat
 
 	temp = list_operation;
 	minimum_moves = list_operation;
-	t_stack *x = NULL;
-	x = *b;
-	printf("\n");
-	while (x)
-	{
-		printf(" %ld ", x->val);
-		x = x->next;
-	}
-	printf("\n");
+	// t_stack *x = NULL;
+	// x = *b;
+	// printf("\n");
+	// while (x)
+	// {
+	// 	printf(" %ld ", x->val);
+	// 	x = x->next;
+	// }
+	// printf("\n");
 	while(temp){
 		if (temp->total_moves < minimum_moves->total_moves)
 			minimum_moves = temp;
-		printf("a[%d] : %ld --> b[%d] : %ld  in %d moves\n", temp->index_to_push, temp->element_to_push, temp->index_to_follow, temp->element_to_follow, temp->total_moves);
+		// printf("a[%d] : %ld --> b[%d] : %ld  in %d moves\n", temp->index_to_push, temp->element_to_push, temp->index_to_follow, temp->element_to_follow, temp->total_moves);
 		temp = temp->next;
 	}
-	// rotate_ab(a, b, stacks, minimum_moves);
-	rotate_a(a, stacks, minimum_moves);
-	rotate_b(b, stacks, minimum_moves);
+	rotate_ab_a_to_b(a, b, stacks, minimum_moves);
+	// rotate_a(a, stacks, minimum_moves);
+	// rotate_b(b, stacks, minimum_moves);
 	pb(a, b, stacks);
 }
 
-void	ascinding_sort(t_stack **a, t_stack **b, t_p_swap *stacks)
+void	push_a(t_stack **a, t_stack **b, t_p_swap *stacks, t_operation *list_operation)
 {
-	long	t[stacks->size_b];
-	int		max;
+	t_operation	*temp;
+	t_operation	*minimum_moves;
 
-	fill_tab(t, *b);
-	max = get_max(t, stacks->size_b);
-	if (max > (stacks->size_b / 2)){
-		max = stacks->size_b - max;
-		while(max){
-			rrb(b);
-			max --;
+	temp = list_operation;
+	minimum_moves = list_operation;
+	// t_stack *x = NULL;
+	// x = *a;
+	// printf("\n");
+	// while (x)
+	// {
+	// 	 printf(" %ld ", x->val);
+	// 	x = x->next;
+	// }
+	// printf("\n");
+	while(temp){
+		if (temp->total_moves < minimum_moves->total_moves)
+			minimum_moves = temp;
+		// printf("b[%d] : %ld --> a[%d] : %ld  in %d moves\n", temp->index_to_push, temp->element_to_push, temp->index_to_follow, temp->element_to_follow, temp->total_moves);
+		temp = temp->next;
+	}
+	rotate_ab_b_to_a(a, b, stacks, minimum_moves);
+	pa(a, b, stacks);
+}
+
+void	ascinding_sort(t_stack **a, t_p_swap *stacks)
+{
+	long	t[stacks->size_a];
+	int		min;
+
+	fill_tab(t, *a);
+	min = get_min(t, stacks->size_a);
+	if (min > (stacks->size_a / 2)){
+		min = stacks->size_a - min;
+		while(min){
+			rra(a);
+			min --;
 		}
 	}
 	else {
-		while(max){
-			rb(b);
-			max --;
+		while(min){
+			ra(a);
+			min --;
 		}
 	}
-	while(stacks->size_b)
-		pa(a, b, stacks);
 }
 
-void	final_sort(t_stack **a, t_stack **b, t_p_swap *stacks)
+void	sort_to_b(t_stack **a, t_stack **b, t_p_swap *stacks)
 {
 	t_operation	*operation;
 	t_operation	*list_operation;
 	int			i;
 	t_stack		*temp;
 
-	while (stacks->size_a > 0){
-
+	while (stacks->size_a > 3){
+		// pb(a, b, stacks);
 		i = 0;
 		temp = *a;
 		list_operation = NULL;
@@ -444,16 +623,50 @@ void	final_sort(t_stack **a, t_stack **b, t_p_swap *stacks)
 			operation = new_operation();
 			operation->index_to_push = i;
 			operation->element_to_push = temp->val;
-			get_index_to_follow(stacks, &operation);
+			get_index_to_follow_in_b(stacks, &operation);
 			operation_add_back(&list_operation, operation);
 			i ++;
 			temp = temp->next;
 		}
-		get_operation_moves(stacks, &list_operation);
+		get_operation_moves_a_to_b(stacks, &list_operation);
 		push_b(a, b, stacks, list_operation);
 		clean_operation(list_operation);
 	}
-	ascinding_sort(a, b, stacks);
+}
+
+void	sort_to_a(t_stack **a, t_stack **b, t_p_swap *stacks)
+{
+	t_operation	*operation;
+	t_operation	*list_operation;
+	int			i;
+	t_stack		*temp;
+
+	while (stacks->size_b > 0){
+
+		i = 0;
+		temp = *b;
+		list_operation = NULL;
+		while (temp){
+			operation = new_operation();
+			operation->index_to_push = i;
+			operation->element_to_push = temp->val;
+			get_index_to_follow_in_a(stacks, &operation);
+			operation_add_back(&list_operation, operation);
+			i ++;
+			temp = temp->next;
+		}
+		get_operation_moves_b_to_a(stacks, &list_operation);
+		push_a(a, b, stacks, list_operation);
+		clean_operation(list_operation);
+	}
+}
+
+void	final_sort(t_stack **a, t_stack **b, t_p_swap *stacks)
+{
+	sort_to_b(a, b, stacks);
+	sort_three(a, stacks);
+	// sort_to_a(a, b, stacks);
+	// ascinding_sort(a, stacks);
 }
 
 void	stack_sort(t_stack **a, t_stack **b, t_p_swap *stacks)
@@ -466,9 +679,9 @@ void	stack_sort(t_stack **a, t_stack **b, t_p_swap *stacks)
 	}
 	stacks->size_b = 0;
 	if (stacks->size_a == 2)
-		sort_two(a, b, stacks);
+		sort_two(a);
 	else if (stacks->size_a == 3)
-		sort_three(a, b, stacks);
+		sort_three(a, stacks);
 	else if (stacks->size_a == 4)
 		sort_four(a, b, stacks);
 	else if (stacks->size_a == 5)
@@ -494,10 +707,43 @@ int main(int argc, char **argv)
 	x = stacks.a;
 	while (x)
 	{
-		printf(" %ld ", x->val);
+		printf(" %ld \n", x->val);
 		x = x->next;
 	}
 	clean_stack(stacks.a);
-	// // // ---------------------------------
+	// // // // ---------------------------------
+	printf("**********************************\n");
+	x = stacks.b;
+	while (x)
+	{
+		printf(" %ld \n", x->val);
+		x = x->next;
+	}
+	clean_stack(stacks.b);
     return (0);
 }
+
+// -571697448	-882067235	850544039	-180263464	851023062	-577495119	169072242	-1974639133	1919953921	1595238165	1527678010	-288920263	955356820	200113609	1449858835	-1601361006	653289754	783848612	-1964581616	-1998165054
+
+//  653289754 783848612 -1601361006
+
+// -571697448
+// -882067235
+// 850544039
+// -180263464
+// 851023062
+// -577495119
+// 169072242
+// -1974639133
+// 1919953921
+// 1595238165
+// 1527678010
+// -288920263
+// 955356820
+// 200113609
+// 1449858835
+// -1601361006
+// 653289754
+// 783848612
+// -1964581616
+// -1998165054

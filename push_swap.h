@@ -6,7 +6,7 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 16:28:17 by akrid             #+#    #+#             */
-/*   Updated: 2024/03/05 13:12:37 by akrid            ###   ########.fr       */
+/*   Updated: 2024/03/07 11:21:01 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void    	parse_args(int argc, char **argv, t_stack **a);
 int			check_sorting(t_stack *a);
 void        sa(t_stack **a);
 void        sb(t_stack **b);
-void    	ss(t_p_swap *stacks);
+void    	ss(t_stack **a, t_stack **b);
 void        pa(t_stack **a, t_stack **b, t_p_swap *stack);
 void        pb(t_stack **a, t_stack **b, t_p_swap *stack);
 void    	ra(t_stack **a);
@@ -67,8 +67,8 @@ void        rr(t_stack **a, t_stack **b);
 void    	rra(t_stack **a);
 void    	rrb(t_stack **b);
 void        rrr(t_stack **a, t_stack **b);
-void	    sort_two(t_stack **a, t_stack **b, t_p_swap *stacks);
-void	    sort_three(t_stack **a, t_stack **b, t_p_swap *stacks);
+void	    sort_two(t_stack **a);
+void	    sort_three(t_stack **a, t_p_swap *stacks);
 void	    sort_four(t_stack **a, t_stack **b, t_p_swap *stacks);
 void	    stack_sort(t_stack **a, t_stack **b, t_p_swap *stacks);
 int			main(int argc, char **argv);

@@ -6,7 +6,7 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 20:11:53 by akrid             #+#    #+#             */
-/*   Updated: 2024/03/04 02:22:34 by akrid            ###   ########.fr       */
+/*   Updated: 2024/03/07 11:09:18 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,25 @@ void    sb(t_stack **b)
     }
 }
 
-void    ss(t_p_swap *stacks)
+void    ss(t_stack **a, t_stack **b)
 {
-    sa(&stacks->a);
-    sb(&stacks->b);
+    t_stack *first;
+
+    first = *a;
+    if (first && first->next)
+    {
+        *a = first->next;
+        first->next = (*a)->next;
+        (*a)->next = first;
+    }
+    first = *b;
+    if (first && first->next)
+    {
+        *b = first->next;
+        first->next = (*b)->next;
+        (*b)->next = first;
+    }
+    write(1, "ss\n", 3);
 }
 
 void    pa(t_stack **a, t_stack **b, t_p_swap *stack)

@@ -13,7 +13,7 @@ start_range = -214
 end_range = 214
 
 # Generate 100 random non-repeating numbers within the specified range
-random_numbers = random.sample(range(start_range, end_range + 1), 20)
+random_numbers = random.sample(range(start_range, end_range + 1), 10)
 
 for number in random_numbers:
     print(number, end=" ")

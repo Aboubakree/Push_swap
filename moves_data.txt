@@ -1,0 +1,52 @@
+-------------- push_swap before using turk exactly -----------------
+stack size 		100
+loop time		100
+test result		OK
+total instructions	68338
+maximum instructions	743 (test case 26) : +43(700)
+minimum instructions	631 (test case 23)
+average instructions	683
+memory			leaks command not found
+test_case and output are in trace_loop
+
+stack size 		500
+loop time		100
+test result		OK
+total instructions	592247
+maximum instructions	6225 (test case 90) : +525(5500)
+minimum instructions	5606 (test case 88) : +106
+average instructions	5922
+memory			leaks command not found
+test_case and output are in trace_loop
+
+------------------------------------------------------------------------
+
+stack size 		100
+loop time		100
+test result		OK
+total instructions	68564
+maximum instructions	765 (test case 79)
+minimum instructions	625 (test case 59)
+average instructions	685
+memory			leaks command not found
+test_case and output are in trace_loop
+
+stack size 		500
+loop time		100
+test result		OK
+total instructions	591036
+maximum instructions	6306 (test case 27)
+minimum instructions	5564 (test case 18)
+average instructions	5910
+memory			leaks command not found
+test_case and output are in trace_loop
+------------------------------------------ after using turk as it is------------------------------
+stack size 		100
+loop time		1000
+test result		OK
+total instructions	561823
+maximum instructions	635 (test case 58)
+minimum instructions	501 (test case 615)
+average instructions	561
+memory			leaks command not found
+test_case and output are in trace_loop

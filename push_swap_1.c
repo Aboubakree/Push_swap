@@ -6,7 +6,7 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 16:28:27 by akrid             #+#    #+#             */
-/*   Updated: 2024/02/22 20:29:55 by akrid            ###   ########.fr       */
+/*   Updated: 2024/03/20 18:01:02 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,16 @@ void	clean_stack(t_stack *x)
 		if (x)
 			x = x->next;
 	}	
+}
+
+void	clean_operation(t_operation *operation)
+{
+	t_operation *temp;
+
+	temp = operation;
+	while (temp){
+		operation = operation->next;
+		free(temp);
+		temp = operation;
+	}
 }

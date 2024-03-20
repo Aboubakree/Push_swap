@@ -6,7 +6,7 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 19:02:19 by akrid             #+#    #+#             */
-/*   Updated: 2024/02/22 20:30:13 by akrid            ###   ########.fr       */
+/*   Updated: 2024/03/20 16:17:28 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int    valid_digits(int argc, char **list_args, int i)
     while(i < argc && checker)
 	{
 		j = 0;
-		if (list_args[i][j] == '-' && list_args[i][j + 1])
+		if ((list_args[i][j] == '-' || list_args[i][j] == '+') && list_args[i][j + 1])
 			j ++;
 		while(list_args[i] && list_args[i][j])
 		{
@@ -36,20 +36,10 @@ int    valid_digits(int argc, char **list_args, int i)
 
 void	fill_stack(int argc, char **list_args, t_stack **a, int i)
 {
-	*a = NULL;
 	while (i < argc)
-		add_back(a, node(ft_atoi(list_args[i ++])));
+		add_back(a, node(ft_atoi(list_args[i ++], *a)));
 }
 
-void	check_INT(long test, t_stack *a)
-{
-	if (test > 2147483647 || test < -2147483648)
-	{
-		clean_stack(a);
-		error();
-		exit(EXIT_FAILURE);
-	}
-}
 
 void	check_stack(t_stack *a)
 {
@@ -58,13 +48,10 @@ void	check_stack(t_stack *a)
 	t_stack	*temp2;
 
 	temp  = a;
-	if (temp)
-		check_INT(temp->val, a);
 	while(temp && temp->next)
 	{
 		test = temp->val;
 		temp2 = temp->next;
-		check_INT(test, a);
 		while(temp2)
 		{
 			if (test == temp2->val)

@@ -9,11 +9,11 @@
 import random
 
 # Define the range of numbers you want to generate (e.g., from 1 to 1000)
-start_range = -214
-end_range = 214
+start_range = -10004
+end_range = 10020
 
 # Generate 100 random non-repeating numbers within the specified range
-random_numbers = random.sample(range(start_range, end_range + 1), 10)
+random_numbers = random.sample(range(start_range, end_range + 1), 500)
 
 for number in random_numbers:
     print(number, end=" ")

@@ -6,7 +6,7 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:54:53 by akrid             #+#    #+#             */
-/*   Updated: 2024/03/20 17:57:24 by akrid            ###   ########.fr       */
+/*   Updated: 2024/03/21 14:12:55 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,18 +106,5 @@ void	rotate_ab_down_a_to_b(t_stack **a, t_stack **b, t_operation *element)
 	{
 		ra(a);
 		element->index_to_push --;
-	}
-}
-
-void	rotate_ab_a_to_b(t_stack **a, t_stack **b, t_p_swap *stacks, t_operation *element)
-{
-	if (element->index_to_push > (stacks->size_a / 2) && element->index_to_follow > (stacks->size_b / 2))
-		rotate_ab_up_a_to_b(a, b, stacks, element);
-	else if (element->index_to_push <= (stacks->size_a / 2) && element->index_to_follow <= (stacks->size_b / 2))
-		rotate_ab_down_a_to_b(a, b, element);
-	else 
-	{
-		rotate_a_a_to_b(a, stacks, element);
-		rotate_b_a_to_b(b, stacks, element);
 	}
 }

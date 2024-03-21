@@ -6,7 +6,7 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 04:17:12 by akrid             #+#    #+#             */
-/*   Updated: 2024/03/20 17:50:58 by akrid            ###   ########.fr       */
+/*   Updated: 2024/03/21 14:12:16 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	add_front(t_stack **list, t_stack *node)
 	node->next = *list;
 	*list = node;
 }
+
 t_operation	*new_operation()
 {
 	t_operation	*new;

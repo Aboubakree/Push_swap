@@ -6,7 +6,7 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 16:28:17 by akrid             #+#    #+#             */
-/*   Updated: 2024/03/20 18:19:59 by akrid            ###   ########.fr       */
+/*   Updated: 2024/03/20 23:28:01 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "libft/libft.h"
+#include "get_next_line/get_next_line.h"
 # include <limits.h>
 
 typedef struct s_operation{

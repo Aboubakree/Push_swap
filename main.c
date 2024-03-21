@@ -6,51 +6,11 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 16:27:44 by akrid             #+#    #+#             */
-/*   Updated: 2024/03/20 18:20:57 by akrid            ###   ########.fr       */
+/*   Updated: 2024/03/21 14:13:41 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void	get_index_to_follow_in_b(t_p_swap *stacks, t_operation **operation)
-{
-	long	b[stacks->size_b];
-	long	distance[stacks->size_b];
-	int		i;
-	int		dist;
-
-	i = 0;
-	fill_tab(b, stacks->b);
-	while(i < stacks->size_b)
-	{
-		distance[i] = ((*operation)->element_to_push) - b[i];
-		i ++;
-	}
-	dist = get_minimum_distance(distance, stacks->size_b);
-	(*operation)->element_to_follow = b[dist];
-	(*operation)->index_to_follow = dist;
-}
-
-void	get_index_to_follow_in_a(t_p_swap *stacks, t_operation **operation)
-{
-	long	a[stacks->size_a];
-	long	distance[stacks->size_a];
-	int		i;
-	int		dist;
-
-	i = 0;
-	fill_tab(a, stacks->a);
-	while(i < stacks->size_a)
-	{
-		distance[i] = ((*operation)->element_to_push) - a[i];
-		i ++;
-	}
-	dist = get_minimum_distance_b_a(distance, stacks->size_a);
-	(*operation)->element_to_follow = a[dist];
-	(*operation)->index_to_follow = dist;
-}
-
-
 
 void	final_sort(t_stack **a, t_stack **b, t_p_swap *stacks)
 {
@@ -97,3 +57,4 @@ int main(int argc, char **argv)
 	clean_stack(stacks.a);
     return (0);
 }
+

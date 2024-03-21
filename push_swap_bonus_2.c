@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_4.c                                      :+:      :+:    :+:   */
+/*   push_swap_bonus_2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/24 15:18:22 by akrid             #+#    #+#             */
-/*   Updated: 2024/03/21 14:11:48 by akrid            ###   ########.fr       */
+/*   Created: 2024/03/21 14:01:45 by akrid             #+#    #+#             */
+/*   Updated: 2024/03/21 14:05:18 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,17 @@ void    ra(t_stack **a)
     t_stack *iter;
     
     temp = *a;
-    if (temp){
+    if (temp)
+    {
         *a = temp->next;
         temp->next = NULL;
     }
     iter = *a;
     while (iter && iter->next)
         iter = iter->next;
-    if (iter){
+    if (iter)
+    {
         iter->next = temp;
-        write(1, "ra\n", 3);
     }
     else
         *a = temp;
@@ -39,16 +40,17 @@ void    rb(t_stack **b)
     t_stack *iter;
     
     temp = *b;
-    if (temp){
+    if (temp)
+    {
         *b = temp->next;
         temp->next = NULL;
     }
     iter = *b;
     while (iter && iter->next)
         iter = iter->next;
-    if (iter){
+    if (iter)
+    {
         iter->next = temp;
-        write(1, "rb\n", 3);
     }
     else
         *b = temp;
@@ -78,7 +80,6 @@ void    rr(t_stack **a, t_stack **b)
 {
     rr_extended(a);
     rr_extended(b);
-    write(1, "rr\n", 3);
 }
 
 void    rra(t_stack **a)
@@ -94,7 +95,6 @@ void    rra(t_stack **a)
         iter->next = NULL;
         temp->next = *a;
         *a = temp;
-        write(1, "rra\n", 4);
     }
 }
 

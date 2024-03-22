@@ -6,7 +6,7 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:45:08 by akrid             #+#    #+#             */
-/*   Updated: 2024/03/20 23:08:08 by akrid            ###   ########.fr       */
+/*   Updated: 2024/03/22 00:03:39 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	count_words(char *str)
 	return (count);
 }
 
-void    parse_args(int argc, char **argv, t_stack **a)
+void    parse_args(int argc, char **argv, t_stack **a, t_p_swap *stacks)
 {
 	int		i;
 	char	**temp;
@@ -59,6 +59,9 @@ void    parse_args(int argc, char **argv, t_stack **a)
 		}
 		i ++;
 	}
+	stacks->size_a = ft_lstsize(*a);
+	stacks->b = NULL;
+	stacks->size_b = 0;
 }
 
 void	fill_tab(long t[],t_stack *x)

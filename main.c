@@ -6,7 +6,7 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 16:27:44 by akrid             #+#    #+#             */
-/*   Updated: 2024/03/21 14:13:41 by akrid            ###   ########.fr       */
+/*   Updated: 2024/03/22 00:04:23 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int main(int argc, char **argv)
     t_p_swap    stacks;
 	int		sort;
 
-    parse_args(argc, argv, &stacks.a);
+    parse_args(argc, argv, &stacks.a, &stacks);
 	check_stack(stacks.a);
 	sort = check_sorting(stacks.a);
 	if (sort == 0)

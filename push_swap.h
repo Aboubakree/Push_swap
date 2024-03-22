@@ -6,7 +6,7 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 16:28:17 by akrid             #+#    #+#             */
-/*   Updated: 2024/03/20 23:28:01 by akrid            ###   ########.fr       */
+/*   Updated: 2024/03/22 00:05:06 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int			valid_digits(int argc, char **list_args, int i);
 void		fill_stack(int argc, char **list_args, t_stack **a, int i);
 void		check_INT(long test, t_stack *a);
 void		check_stack(t_stack *a);
-void    	parse_args(int argc, char **argv, t_stack **a);
+void    	parse_args(int argc, char **argv, t_stack **a, t_p_swap *stacks);
 int			check_sorting(t_stack *a);
 void        sa(t_stack **a);
 void        sb(t_stack **b);

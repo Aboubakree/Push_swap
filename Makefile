@@ -12,9 +12,10 @@ SRC = main.c push_swap_1.c push_swap_2.c push_swap_3.c\
 	libft/ft_split.c libft/ft_atoi.c libft/ft_lstsize.c\
 	
 
-SRC_BONUS = push_swap_bonus.c push_swap_1.c push_swap_2.c push_swap_6.c push_swap_bonus_1.c push_swap_bonus_2.c\
+SRC_BONUS = push_swap_bonus.c push_swap_1.c push_swap_2.c push_swap_5.c push_swap_6.c\
+	push_swap_bonus_1.c push_swap_bonus_2.c\
 	push_swap_bonus_3.c\
-	libft/ft_split.c libft/ft_atoi.c libft/ft_lstsize.c\
+	libft/ft_split.c libft/ft_atoi.c libft/ft_lstsize.c libft/ft_strcmp.c\
 	get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 
 OBJ = $(SRC:.c=.o)
@@ -26,13 +27,15 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
 
-bonus : $(OBJ_BONUS)
+bonus : $(NAME2)
+
+$(NAME2) : $(OBJ_BONUS)
 	$(CC) $(CFLAGS) -o $(NAME2) $(OBJ_BONUS)
 
 clean: 
-	rm -rf $(OBJ)
+	rm -rf $(OBJ) $(OBJ_BONUS)
 
 fclean : clean
-	rm -rf $(NAME)
+	rm -rf $(NAME) $(NAME2)
 
 re : fclean all

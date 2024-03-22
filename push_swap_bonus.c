@@ -6,11 +6,18 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 21:23:09 by akrid             #+#    #+#             */
-/*   Updated: 2024/03/21 14:31:58 by akrid            ###   ########.fr       */
+/*   Updated: 2024/03/22 00:16:15 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "push_swap.h"
+
+void    error_bonus(t_stack *a, t_stack *b)
+{
+    clean_stack(a);
+    clean_stack(b);
+    error();
+}
 
 void    do_rule(char *rule, t_stack **a, t_stack **b, t_p_swap *stacks)
 {
@@ -36,8 +43,8 @@ void    do_rule(char *rule, t_stack **a, t_stack **b, t_p_swap *stacks)
         rrb(b);
     else if (ft_strcmp(rule, "rrr\n") == 0)
         rrr(a, b);
-    // else
-    //     error_bonus(a, b);
+    else
+        error_bonus(*a, *b);
 }
 
 void    get_instructions(t_stack **a, t_stack **b, t_p_swap *stacks)
@@ -69,10 +76,15 @@ void    is_sort(t_p_swap *stacks)
 int main(int argc, char **argv)
 {
     t_p_swap    stacks;
-	int		sort;
 
-    parse_args(argc, argv, &stacks.a);
+    parse_args(argc, argv, &stacks.a, &stacks);
 	check_stack(stacks.a);
-    get_instructions(&stacks.a, &stacks.b, &stacks);
-    is_sort(&stacks);
+    if (stacks.size_a)
+    {
+        get_instructions(&stacks.a, &stacks.b, &stacks);
+        is_sort(&stacks);
+    }
+    clean_stack(stacks.a);
+    clean_stack(stacks.b);
+    return (0);
 }

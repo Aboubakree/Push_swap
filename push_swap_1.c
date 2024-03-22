@@ -6,7 +6,7 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 16:28:27 by akrid             #+#    #+#             */
-/*   Updated: 2024/03/20 18:01:02 by akrid            ###   ########.fr       */
+/*   Updated: 2024/03/22 01:18:38 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,50 +14,53 @@
 
 int	length(char **str)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
-	while(str && str[i])
-		i ++;
+	while (str && str[i])
+		i++;
 	return (i);
 }
 
-void	error()
+void	error(void)
 {
 	write(2, "Error\n", 6);
 	exit(EXIT_FAILURE);
 }
+
 void	clean(char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(str && str[i])
-		free(str[i ++]);
+	while (str && str[i])
+		free(str[i++]);
 	free(str);
 }
 
 void	clean_stack(t_stack *x)
 {
-	t_stack *y;
+	t_stack	*y;
+
 	y = x;
 	if (x)
 		x = x->next;
-	while(y)
+	while (y)
 	{
 		free(y);
 		y = x;
 		if (x)
 			x = x->next;
-	}	
+	}
 }
 
 void	clean_operation(t_operation *operation)
 {
-	t_operation *temp;
+	t_operation	*temp;
 
 	temp = operation;
-	while (temp){
+	while (temp)
+	{
 		operation = operation->next;
 		free(temp);
 		temp = operation;

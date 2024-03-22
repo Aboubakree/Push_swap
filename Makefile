@@ -1,7 +1,7 @@
 NAME = push_swap
 NAME2 = checker
 
-CC = cc
+CC = cc -fsanitize=address -g3
 
 CFLAGS = -Wall -Wextra -Werror
 
@@ -39,3 +39,5 @@ fclean : clean
 	rm -rf $(NAME) $(NAME2)
 
 re : fclean all
+
+.SECONDARY : $(OBJ) $(OBJ_BONUS)

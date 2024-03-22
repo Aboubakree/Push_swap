@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akrid <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 19:50:29 by akrid             #+#    #+#             */
-/*   Updated: 2023/11/24 19:50:32 by akrid            ###   ########.fr       */
+/*   Updated: 2024/03/22 01:38:20 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*get_next_line(int fd)
 		if (s < 1)
 		{
 			if (line != NULL && line[0] != '\0' && s != -1)
-			{	
+			{
 				last = line;
 				line = NULL;
 				return (last);

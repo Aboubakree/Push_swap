@@ -6,13 +6,13 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 23:25:53 by akrid             #+#    #+#             */
-/*   Updated: 2024/03/20 16:17:04 by akrid            ###   ########.fr       */
+/*   Updated: 2024/03/22 01:39:29 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
-void	check_INT(long test, t_stack *a)
+void	check_int(long test, t_stack *a)
 {
 	if (test > 2147483647 || test < -2147483648)
 	{
@@ -42,7 +42,7 @@ long	ft_atoi(const char *str, t_stack *a)
 		res *= 10;
 		res += *str - '0';
 		str ++;
-		check_INT(res * ng, a);
+		check_int(res * ng, a);
 	}
 	return (res * ng);
 }

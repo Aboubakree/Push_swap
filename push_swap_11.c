@@ -6,20 +6,21 @@
 /*   By: akrid <akrid@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:58:31 by akrid             #+#    #+#             */
-/*   Updated: 2024/03/20 18:00:04 by akrid            ###   ########.fr       */
+/*   Updated: 2024/03/22 01:26:14 by akrid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	push_b(t_stack **a, t_stack **b, t_p_swap *stacks, t_operation *list_operation)
+void	push_b(t_stack **a, t_stack **b, t_p_swap *stacks,
+		t_operation *list_operation)
 {
 	t_operation	*temp;
 	t_operation	*minimum_moves;
 
 	temp = list_operation;
 	minimum_moves = list_operation;
-	while(temp)
+	while (temp)
 	{
 		if (temp->total_moves < minimum_moves->total_moves)
 			minimum_moves = temp;
@@ -29,7 +30,8 @@ void	push_b(t_stack **a, t_stack **b, t_p_swap *stacks, t_operation *list_operat
 	pb(a, b, stacks);
 }
 
-void	push_a(t_stack **a, t_stack **b, t_p_swap *stacks, t_operation *list_operation)
+void	push_a(t_stack **a, t_stack **b, t_p_swap *stacks,
+		t_operation *list_operation)
 {
 	rotate_a_b_to_a(a, stacks, list_operation);
 	pa(a, b, stacks);
@@ -37,26 +39,30 @@ void	push_a(t_stack **a, t_stack **b, t_p_swap *stacks, t_operation *list_operat
 
 void	ascinding_sort(t_stack **a, t_p_swap *stacks)
 {
-	long	t[stacks->size_a];
+	long	*t;
 	int		min;
 
+	t = allocat_array(stacks->size_a);
 	fill_tab(t, *a);
 	min = get_min(t, stacks->size_a);
 	if (min > (stacks->size_a / 2))
 	{
 		min = stacks->size_a - min;
-		while(min){
+		while (min)
+		{
 			rra(a);
-			min --;
+			min--;
 		}
 	}
-	else 
+	else
 	{
-		while(min){
+		while (min)
+		{
 			ra(a);
-			min --;
+			min--;
 		}
 	}
+	free(t);
 }
 
 void	sort_to_b(t_stack **a, t_stack **b, t_p_swap *stacks)
@@ -78,7 +84,7 @@ void	sort_to_b(t_stack **a, t_stack **b, t_p_swap *stacks)
 			operation->element_to_push = temp->val;
 			get_index_to_follow_in_b(stacks, &operation);
 			operation_add_back(&list_operation, operation);
-			i ++;
+			i++;
 			temp = temp->next;
 		}
 		get_operation_moves_a_to_b(stacks, &list_operation);
